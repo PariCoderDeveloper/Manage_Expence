@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Expence</title>
+    <link rel="stylesheet" href="Styles/style.css">
+</head>
+
+<body dir="rtl">
+    <div class="container">
+        <h2>مدیریت هزینه‌ها</h2>
+
+        <form id="expense-form">
+            <label>عنوان هزینه</label>
+            <input type="text" id="title" required />
+
+            <label>مبلغ (تومان)</label>
+            <input type="number" id="amount" required />
+
+            <label>تاریخ</label>
+            <input type="date" id="date" required />
+
+            <label>دسته‌بندی</label>
+            <select id="category">
+                <option value="خوراک">خوراک</option>
+                <option value="حمل و نقل">حمل و نقل</option>
+                <option value="خرید">خرید</option>
+                <option value="سایر">سایر</option>
+            </select>
+
+            <label>توضیحات (اختیاری)</label>
+            <textarea id="notes" rows="2"></textarea>
+
+            <button type="submit">افزودن هزینه</button>
+        </form>
+
+        <hr />
+
+        <h3>لیست هزینه‌ها</h3>
+        <table id="expenses-list">
+            <thead>
+                <th>عنوان هزینه</th>
+                <th>مبلغ (تومان)</th>
+                <th>تاریخ</th>
+                <th>دسته بندی</th>
+                <th>توضیحات</th>
+                <th>عملیات</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+<script src="Script/script.js"></script>
+</body>
+
+</html>
