@@ -8,52 +8,50 @@
     <link rel="stylesheet" href="Styles/style.css">
 </head>
 
-<body dir="rtl">
+<body>
     <div class="container">
-        <h2>مدیریت هزینه‌ها</h2>
+        <h2>Expenses List</h2>
 
         <form id="expense-form">
-            <label>عنوان هزینه</label>
+            <label>Expense Title</label>
             <input type="text" id="title" required />
 
-            <label>مبلغ (تومان)</label>
+            <label>Amount</label>
             <input type="number" id="amount" required />
 
-            <label>تاریخ</label>
+            <label>Date</label>
             <input type="date" id="date" required />
 
-            <label>دسته‌بندی</label>
+            <label>Category</label>
             <select id="category">
-                <option value="خوراک">خوراک</option>
-                <option value="حمل و نقل">حمل و نقل</option>
-                <option value="خرید">خرید</option>
-                <option value="سایر">سایر</option>
+                <option value="Food">Food</option>
+                <option value="Transfer">Transfer</option>
+                <option value="Shop">Shop</option>
+                <option value="etc">etc</option>
             </select>
 
-            <label>توضیحات (اختیاری)</label>
+            <label>Description (Optional)</label>
             <textarea id="notes" rows="2"></textarea>
 
-            <button type="submit">افزودن هزینه</button>
+            <button type="submit">Add expense</button>
         </form>
 
         <hr />
 
-        <h3>لیست هزینه‌ها</h3>
-        <table id="expenses-list">
+        <h3>Expense List</h3>
+        <table>
             <thead>
-                <th>عنوان هزینه</th>
-                <th>مبلغ (تومان)</th>
-                <th>تاریخ</th>
-                <th>دسته بندی</th>
-                <th>توضیحات</th>
-                <th>عملیات</th>
+                <th>Operations</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Expense</th>
             </thead>
-            <tbody>
-
-            </tbody>
+            <tbody id="expenses-list"></tbody>
         </table>
     </div>
-<script src="Script/script.js"></script>
+    <script src="Script/script.js"></script>
 </body>
 
 </html>

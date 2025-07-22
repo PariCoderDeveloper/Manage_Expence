@@ -9,7 +9,6 @@ window.addEventListener("DOMContentLoaded", () => {
     let reques = indexedDB.open("expenses", 1);
     reques.onupgradeneeded = function (event) {
         let db = event.target.result;
-        // create an Object Store
         let userStore = db.createObjectStore("expense", {
             keyPath: 'id',
             autoIncrement: true
@@ -25,7 +24,6 @@ window.addEventListener("DOMContentLoaded", () => {
     reques.onerror = (e) => {
         console.log("Some error happend", e.target.error);
     }
-
 });
 document.querySelector("#expense-form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -51,9 +49,10 @@ document.querySelector("#expense-form").addEventListener("submit", (event) => {
         alert("✅ Expense added");
         exTitle.value = "";
         exAmount.value = "";
-        exCategory.value = "";
+        exCategory.value = "Food";
         exDate.value = "";
         exNotes.value = "";
+        getAllExpands();
     }
     addRequest.onerror = (e) => {
         console.error("❌ Error saving expense", e);
@@ -69,22 +68,43 @@ function getAllExpands() {
     let store = tx.objectStore("expense");
     let cursorRequest = store.openCursor();
 
-    let expenses_list = document.getElementById("expenses-list");
-
+    let expenses_list = document.querySelector("#expenses-list");
+    expenses_list.innerHTML = "";
+        
     cursorRequest.onsuccess = (e) => {
         let cursor = e.target.result;
+
         if (cursor) {
-            console.log(cursor);
-            
-            expenses_list.innerHTML += `<tr>
-                <td>${cursor.value.title}</td>
-                <td>${cursor.value.amount}</td>
-                <td>${cursor.value.date}</td>
-                <td>${cursor.value.category}</td>
+            expenses_list.innerHTML += `<tr>               
+                <td><button class='remove' data-id=${cursor.value.id}>Remove</button></td>
                 <td>${cursor.value.note}</td>
-                <td><button>Remove</button></td>
+                <td>${cursor.value.category}</td>
+                <td>${cursor.value.date}</td>
+                <td>${cursor.value.amount}</td>
+                <td>${cursor.value.title}</td>
             </tr>`;
             cursor.continue();
         }
     };
 }
+
+// Event Delegate => Use parent element for access to the childs
+document.getElementById("expenses-list").addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove")) {
+        if (!db) return;
+        const id = Number(e.target.dataset.id);
+        let tx = db.transaction("expense", "readwrite");
+        let store = tx.objectStore("expense");
+        const deleteRequest = store.delete(id);
+        deleteRequest.onsuccess = () => {
+            console.log(`✅ Record with ID ${id} deleted`);
+            db = indexedDB.open("expenses", 1);
+        }
+        deleteRequest.onerror = () => {
+            console.log("❌ Failed to delete record");
+        }
+        deleteRequest.oncomplete = () => {
+            getAllExpands();
+        }
+    }
+});
